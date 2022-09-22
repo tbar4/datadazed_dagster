@@ -3,31 +3,31 @@ run_storage:
   class: PostgresRunStorage
   config:
     postgres_db:
-      username: postgres
-      password: secret
-      hostname: dagster-postgres
-      db_name: postgres
-      port: 5432
+      username: ${pg_user}
+      password: ${pg_password}
+      hostname: ${pg_host}
+      db_name: dagster
+      port: ${pg_port}
 event_log_storage:
   module: dagster_postgres.event_log
   class: PostgresEventLogStorage
   config:
     postgres_db:
-      username: postgres
-      password: secret
-      hostname: dagster-postgres
-      db_name: postgres
-      port: 5432
+      username: ${pg_user}
+      password: ${pg_password}
+      hostname: ${pg_host}
+      db_name: dagster
+      port: ${pg_port}
 schedule_storage:
   module: dagster_postgres.schedule_storage
   class: PostgresScheduleStorage
   config:
     postgres_db:
-      username: postgres
-      password: secret
-      hostname: dagster-postgres
-      db_name: postgres
-      port: 5432
+      username: ${pg_user}
+      password: ${pg_password}
+      hostname: ${pg_host}
+      db_name: dagster
+      port: ${pg_port}
 run_coordinator:
   module: dagster.core.run_coordinator
   class: QueuedRunCoordinator

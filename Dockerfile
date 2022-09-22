@@ -1,17 +1,15 @@
-FROM python:3.7-slim
+FROM python:3.10-slim
 
-RUN mkdir -p /opt/dagster/dagster_home /opt/dagster/app
-COPY . /opt/dagster/app/
-COPY . /opt/dagster/dagster_home/
-RUN cd /opt/dagster/app/; pip install -e .
+# Change working directory
+WORKDIR /usr/src/app
+ENV DAGSTER_HOME=/usr/src/app
 
-ENV DAGSTER_HOME=/opt/dagster/dagster_home/
+# Install dependencies
+COPY ./requirements.txt .
+RUN pip install -r requirements.txt
 
-# Copy dagster instance YAML to $DAGSTER_HOME
-# COPY dagster.yaml /opt/dagster/dagster_home/
-
-WORKDIR /opt/dagster/app
-
-EXPOSE 3000
+# Copy source code
+COPY ./dagster.yaml ./workspace.yaml ./
+COPY  ./dagster_example ./dagster_example
 
 CMD ["dagit", "-w", "workspace.yaml", "-h", "0.0.0.0", "-p", "3000"]
