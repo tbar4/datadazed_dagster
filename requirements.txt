@@ -1,4 +1,6 @@
 aiohttp==3.8.1
+asyncio==3.4.3
+beautifulsoup4==4.11.1
 dagit==1.0.7
 dagster-postgres==0.16.7
 dagster==1.0.7
