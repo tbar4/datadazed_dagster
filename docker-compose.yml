@@ -2,7 +2,7 @@ services:
   dagster-dagit:
     build: .
     ports:
-      - 3000:3000
+      - 3003:3000
   dagster-daemon:
     build: .
     command: "dagster-daemon run"
