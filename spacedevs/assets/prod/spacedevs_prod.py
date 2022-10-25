@@ -272,7 +272,7 @@ def reports_prod() -> DataFrame:
     return reports
 
 @asset
-def posts_prod():
+def posts_prod(articles_prod, posts_prod, reports_prod):
     pg_user = os.environ.get("pg_user")
     pg_password = os.environ.get("pg_password")
     pg_host = os.environ.get("pg_host")
