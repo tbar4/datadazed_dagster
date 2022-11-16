@@ -8,14 +8,14 @@ from bs4 import BeautifulSoup
 from ...api_puller.read_api import *
 
 @asset
-def agencies_prod() -> DataFrame:
+def agencies_prod(config_agencytype_prod) -> DataFrame:
     agencies = BaseAPI(library="agencies", env = "prod")
     df = agencies.get_api_data()
     agencies.write_to_sink(df=df)
     return df
 
 @asset
-def astronaut_prod() -> DataFrame:
+def astronaut_prod(config_astronautrole_prod, config_astronautstatus_prod, config_astronauttype_prod) -> DataFrame:
     astronauts = BaseAPI(library="astronaut", env = "prod")
     df = astronauts.get_api_data()
     astronauts.write_to_sink(df=df)
@@ -141,14 +141,14 @@ def config_spacestationstatus_prod() -> DataFrame:
     return df
 
 @asset
-def docking_event_prod() -> DataFrame:
+def docking_event_prod(config_dockinglocation_prod) -> DataFrame:
     docking_event = BaseAPI(library="docking_event", filter="docking__gt", env = "prod")
     df = docking_event.get_api_data()
     docking_event.write_to_sink(df=df)
     return df
 
 @asset
-def event_prod() -> DataFrame:
+def event_prod(config_eventtype_prod) -> DataFrame:
     event = BaseAPI(library="event", env = "prod")
     df = event.get_api_data()
     df = parse_json_col(df=df, column="launches", new_col_name="launch_id")
@@ -160,7 +160,7 @@ def event_prod() -> DataFrame:
     return df
 
 @asset
-def expedition_prod() -> DataFrame:
+def expedition_prod(config_missiontype_prod, config_orbit_prod) -> DataFrame:
     expedition = BaseAPI(library="expedition", env = "prod")
     df = expedition.get_api_data()
     df = parse_json_col(df=df, index_label="id", column="mission_patches", new_col_name="mission_patch_id", drop_col=False)
@@ -171,7 +171,7 @@ def expedition_prod() -> DataFrame:
     return df
 
 @asset
-def launch_prod() -> DataFrame:
+def launch_prod(config_firststagetype_prod) -> DataFrame:
     launch = BaseAPI(library="launch", env = "prod")
     df = launch.get_api_data()
     df = parse_json_col(df=df, index_label="id", column="program", new_col_name="program_id")
@@ -179,14 +179,14 @@ def launch_prod() -> DataFrame:
     return df
 
 @asset
-def launcher_prod() -> DataFrame:
+def launcher_prod(config_launcher_prod, config_launchstatus_prod) -> DataFrame:
     launcher = BaseAPI(library="launcher", env = "prod")
     df = launcher.get_api_data()
     launcher.write_to_sink(df=df)
     return df
 
 @asset
-def location_prod() -> DataFrame:
+def location_prod(config_landinglocation_prod) -> DataFrame:
     location = BaseAPI(library="location", env = "prod")
     df = location.get_api_data()
     location.write_to_sink(df=df)
@@ -208,14 +208,14 @@ def program_prod() -> DataFrame:
     return df
 
 @asset
-def spacecraft_prod() -> DataFrame:
+def spacecraft_prod(config_spacecraft_prod, config_spacecraftstatus_prod) -> DataFrame:
     spacecraft = BaseAPI(library="spacecraft", env = "prod")
     df = spacecraft.get_api_data()
     spacecraft.write_to_sink(df=df)
     return df
 
 @asset
-def spacecraft_flight_prod() -> DataFrame:
+def spacecraft_flight_prod(config_spacecraft_prod, config_spacecraftstatus_prod, expedition_prod, event_prod) -> DataFrame:
     spacecraft_flight = BaseAPI(library="spacecraft/flight", env = "prod")
     df = spacecraft_flight.get_api_data()
     df = parse_json_col(df=df, index_label="id", column="launch_program", new_col_name="launch_program_id")
@@ -223,7 +223,7 @@ def spacecraft_flight_prod() -> DataFrame:
     return df
 
 @asset
-def spacestation_prod() -> DataFrame:
+def spacestation_prod(config_spacestationstatus_prod) -> DataFrame:
     spacestation = BaseAPI(library="spacestation", env = "prod")
     df = spacestation.get_api_data()
     df = parse_json_col(df=df, index_label="id", column="owners", new_col_name="owner_id")
@@ -272,7 +272,7 @@ def reports_prod() -> DataFrame:
     return reports
 
 @asset
-def posts_prod(articles_prod, posts_prod, reports_prod):
+def posts_prod(articles_prod, blogs_prod, reports_prod):
     pg_user = os.environ.get("pg_user")
     pg_password = os.environ.get("pg_password")
     pg_host = os.environ.get("pg_host")

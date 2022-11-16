@@ -20,4 +20,4 @@ RUN pip install -r requirements.txt
 #COPY ./dagster.yaml ./workspace.yaml ./
 COPY  . .
 
-CMD ["dagit", "-w", "workspace.yaml", "-h", "0.0.0.0", "-p", "3003"]
+CMD ["dagit", "-w", "workspace.yaml", "-h", "0.0.0.0", "-p", "3000"]
