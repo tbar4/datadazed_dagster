@@ -8,11 +8,11 @@ spacedevs_dev_schedule = ScheduleDefinition(
     )
 
 spacedevs_prod_data_schedule = ScheduleDefinition(
-    job=spacedevs_prod_asset_job, 
+    job=spacedevs_prod_data_asset_job, 
     cron_schedule="0 1 * * *"
     )
 
 spacedevs_prod_news_schedule = ScheduleDefinition(
-    job=spacedevs_prod_asset_job, 
+    job=spacedevs_prod_news_asset_job, 
     cron_schedule="0 * * * *"
     )

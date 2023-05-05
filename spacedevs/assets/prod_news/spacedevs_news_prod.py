@@ -7,6 +7,12 @@ from bs4 import BeautifulSoup
 
 from ...api_puller.read_api import *
 
+pg_user = os.environ.get("pg_user")
+pg_password = os.environ.get("pg_password")
+pg_host = os.environ.get("pg_host")
+pg_port = os.environ.get("pg_port")
+pg_db = os.environ.get("pg_db")
+write_engine = create_engine(f"postgresql://{pg_user}:{pg_password}@{pg_host}:{pg_port}/{pg_db}")
 
 @asset
 def articles_prod() -> DataFrame:
