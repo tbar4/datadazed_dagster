@@ -10,7 +10,7 @@ run_storage:
       hostname: 
         env: pg_host
       db_name: dagster
-      port: 5432
+      port: 5433
 event_log_storage:
   module: dagster_postgres.event_log
   class: PostgresEventLogStorage
@@ -23,7 +23,7 @@ event_log_storage:
       hostname: 
         env: pg_host
       db_name: dagster
-      port: 5432
+      port: 5433
 schedule_storage:
   module: dagster_postgres.schedule_storage
   class: PostgresScheduleStorage
@@ -36,7 +36,7 @@ schedule_storage:
       hostname: 
         env: pg_host
       db_name: dagster
-      port: 5432
+      port: 5433
 run_coordinator:
   module: dagster.core.run_coordinator
   class: QueuedRunCoordinator
