@@ -91,7 +91,7 @@ def posts_prod(articles_prod, blogs_prod, reports_prod):
                             "title": title,
                             "html": content,
                             "feature_image": image_url,
-                            "status": published,
+                            "status": "published",
                             "visibility": "public",
                             "published_at": published_at,
                             "tags": [
