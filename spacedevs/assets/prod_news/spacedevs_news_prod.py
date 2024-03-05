@@ -54,24 +54,7 @@ def posts_prod(articles_prod, blogs_prod, reports_prod):
     pg_port = os.environ.get("pg_port")
     pg_db = os.environ.get("pg_db")
 
-    # authorize ghost
-    key = os.environ.get("ghost_api_token")
-    id, secret = key.split(':')
-    # Prepare header and payload
-    iat = int(date.now().timestamp())
-    url = 'https://space-news.io/ghost/api/admin/posts/?source=html'
-
-    header = {'alg': 'HS256', 'typ': 'JWT', 'kid': id}
-    payload = {
-        'iat': iat,
-        'exp': iat + 5 * 60,
-        'aud': '/admin/'
-    }
-    # Create the token (including decoding secret)
-    token = jwt.encode(payload, bytes.fromhex(secret), algorithm='HS256', headers=header)
-    token = token.decode()
-    headers = {'Authorization': 'Ghost {}'.format(token)}
-    ## End Ghost
+    
 
     write_engine = create_engine(f"postgresql://{pg_user}:{pg_password}@{pg_host}:{pg_port}/{pg_db}")
     union_df = pd.read_sql(union_statement, write_engine)
@@ -85,6 +68,25 @@ def posts_prod(articles_prod, blogs_prod, reports_prod):
                 for p in soup.find_all('p'):
                     body += str(p)
                 union_df.loc[union_df['id'] == pkey, 'content'] = body
+
+                # authorize ghost
+                key = os.environ.get("ghost_api_token")
+                id, secret = key.split(':')
+                # Prepare header and payload
+                iat = int(date.now().timestamp())
+                ghost_url = 'https://space-news.io/ghost/api/admin/posts/?source=html'
+
+                header = {'alg': 'HS256', 'typ': 'JWT', 'kid': id}
+                payload = {
+                    'iat': iat,
+                    'exp': iat + 5 * 60,
+                    'aud': '/admin/'
+                }
+                # Create the token (including decoding secret)
+                token = jwt.encode(payload, bytes.fromhex(secret), algorithm='HS256', headers=header)
+                token = token.decode()
+                headers = {'Authorization': 'Ghost {}'.format(token)}
+                ## End Ghost
                 
                 ghost_body = {
                     'posts': [
@@ -105,7 +107,7 @@ def posts_prod(articles_prod, blogs_prod, reports_prod):
                     ]
                 }
                 my_logger.info(ghost_body)
-                r = requests.post(url, json=ghost_body, headers=headers)
+                r = requests.post(ghost_url, json=ghost_body, headers=headers)
         except:
             pass
 
