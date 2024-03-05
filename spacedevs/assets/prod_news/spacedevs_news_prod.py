@@ -1,4 +1,4 @@
-from dagster import asset
+from dagster import get_dagster_logger, asset
 from pandas import DataFrame
 from pandas.io.json import json_normalize
 import asyncio
@@ -47,6 +47,7 @@ def reports_prod() -> DataFrame:
 
 @asset
 def posts_prod(articles_prod, blogs_prod, reports_prod):
+    my_logger = get_dagster_logger()
     pg_user = os.environ.get("pg_user")
     pg_password = os.environ.get("pg_password")
     pg_host = os.environ.get("pg_host")
@@ -103,7 +104,7 @@ def posts_prod(articles_prod, blogs_prod, reports_prod):
                         }
                     ]
                 }
-                print_to_stdout(ghost_body)
+                my_logger.info(ghost_body)
                 r = requests.post(url, json=ghost_body, headers=headers)
         except:
             pass
