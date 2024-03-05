@@ -57,7 +57,7 @@ def posts_prod(articles_prod, blogs_prod, reports_prod):
     id, secret = key.split(':')
     # Prepare header and payload
     iat = int(date.now().timestamp())
-    url = 'https://space-news.io/ghost/api/admin/posts/'
+    url = 'https://space-news.io/ghost/api/admin/posts/?source=html'
 
     header = {'alg': 'HS256', 'typ': 'JWT', 'kid': id}
     payload = {
@@ -102,6 +102,7 @@ def posts_prod(articles_prod, blogs_prod, reports_prod):
                         }
                     ]
                 }
+                print(ghost_body)
                 r = requests.post(url, json=ghost_body, headers=headers)
         except:
             pass
