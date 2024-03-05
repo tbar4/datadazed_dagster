@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 import requests
 import jwt
 from datetime import datetime as date
+import sys
 
 from ...api_puller.read_api import *
 
@@ -102,7 +103,7 @@ def posts_prod(articles_prod, blogs_prod, reports_prod):
                         }
                     ]
                 }
-                print(ghost_body)
+                print_to_stdout(ghost_body)
                 r = requests.post(url, json=ghost_body, headers=headers)
         except:
             pass
