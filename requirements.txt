@@ -8,6 +8,6 @@ pandas==1.4.4
 pendulum<3.0
 psycopg2-binary==2.9.3
 PyJWT==1.7.1
-requests==1.21.1
+requests==1.2.2
 SQLAlchemy==1.4.41
 urllib3==1.26.12
