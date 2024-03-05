@@ -12,6 +12,9 @@ ENV pg_password=${pg_password}
 # SpaceDevs
 ENV space_devs_token=${space_devs_token}
 
+# Ghost Token
+ENV ghost_api_token=${ghost_api_token}
+
 # Install dependencies
 COPY ./requirements.txt .
 RUN pip install -r requirements.txt
