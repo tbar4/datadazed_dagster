@@ -44,10 +44,6 @@ run_coordinator:
     max_concurrent_runs: 5
 telemetry:
   enabled: false
-loggers:
-  console:
-    config:
-      log_level: DEBUG
 python_logs:
   managed_python_loggers:
     - my_logger
