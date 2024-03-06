@@ -47,3 +47,6 @@ telemetry:
 python_logs:
   managed_python_loggers:
     - my_logger
+compute_logs:
+    module: dagster.core.storage.noop_compute_log_manager
+    class: "NoOpComputeLogManager"
