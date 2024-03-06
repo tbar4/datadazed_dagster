@@ -91,7 +91,7 @@ def posts_prod(articles_prod, blogs_prod, reports_prod):
                         {
                             "slug": slug,
                             "title": title,
-                            #"html": body,
+                            "html": body,
                             "feature_image": image_url,
                             "status": "published",
                             "visibility": "public",
@@ -104,10 +104,11 @@ def posts_prod(articles_prod, blogs_prod, reports_prod):
                         }
                     ]
                 }
-                print("ghost body:\n")
+                my_logger.info(ghost_url)
                 my_logger.info(ghost_body)
+                my_logger.info(headers)
+                my_logger.info(requests.post(ghost_url, json=ghost_body, headers=headers))
                 r = requests.post(ghost_url, json=ghost_body, headers=headers)
-                print(r)
         except:
             my_logger.error("Couldn't post article!")
 
