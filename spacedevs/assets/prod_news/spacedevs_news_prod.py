@@ -105,8 +105,9 @@ def posts_prod(articles_prod, blogs_prod, reports_prod):
                         }
                     ]
                 }
-                my_logger.info(ghost_body)
+                #my_logger.info(ghost_body)
                 r = requests.post(ghost_url, json=ghost_body, headers=headers)
+                my_logger.info(r.text)
         except:
             my_logger.error("Couldn't post article!")
 
